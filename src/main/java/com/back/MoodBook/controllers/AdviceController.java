@@ -33,15 +33,20 @@ public class AdviceController {
     public List<AdviceResponse> createBook (
             @RequestParam("mood") String mood
     ) {
-        List<Advice> book = adviceService.createBook(mood);
+        List<Advice> book;
+        if(mood.equals("default")){
+            book = adviceService.createBookAllAdvice();
+        }else{
+            book = adviceService.createBook(mood);
+        }
         return book.stream().map(this::response).collect(Collectors.toList());
     }
 
-    @GetMapping
-    public List<AdviceResponse> createBook () {
-        List<Advice> book = adviceService.createBookAllAdvice();
-        return book.stream().map(this::response).collect(Collectors.toList());
-    }
+//    @GetMapping
+//    public List<AdviceResponse> createBook () {
+//        List<Advice> book = adviceService.createBookAllAdvice();
+//        return book.stream().map(this::response).collect(Collectors.toList());
+//    }
 
     public AdviceResponse response(Advice advice){
         return new AdviceResponse(

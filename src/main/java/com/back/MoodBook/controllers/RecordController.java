@@ -46,7 +46,7 @@ public class RecordController {
     }
 
     @GetMapping("/statistic")
-    public String getStatistic(){
+    public String getStatistic() {
         double point = recordService.getStatistic();
         return "\"point\": " + point;
     }
