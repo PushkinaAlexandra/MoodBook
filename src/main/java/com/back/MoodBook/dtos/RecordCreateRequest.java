@@ -10,11 +10,15 @@ public class RecordCreateRequest {
 
     private String reason;
 
-    public @NotBlank(message = "Choose Mood") String getMood() {
+    // Add the no-argument constructor
+    public RecordCreateRequest() {
+    }
+
+    public String getMood() {
         return mood;
     }
 
-    public void setMood(@NotBlank(message = "Choose Mood") String mood) {
+    public void setMood(String mood) {
         this.mood = mood;
     }
 

@@ -8,6 +8,7 @@ import com.back.MoodBook.entity.Record;
 import com.back.MoodBook.service.RecordService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity; // Import ResponseEntity
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,16 +25,18 @@ public class RecordController {
     }
 
     @PostMapping("/newRecord")
-    public AdviceResponse createRecord(
-            @RequestBody @Valid RecordCreateRequest request
+    public ResponseEntity<AdviceResponse> createRecord( // Use ResponseEntity
+                                                        @RequestBody @Valid RecordCreateRequest request
     ) {
         Record record = recordService.createRecord(request);
         Advice advice = record.getAdvice();
-        return new AdviceResponse(
+        AdviceResponse adviceResponse = new AdviceResponse(
                 advice.getId(),
                 advice.getName(),
                 advice.getContent(),
                 advice.getMood());
+
+        return ResponseEntity.ok(adviceResponse); // Return ResponseEntity
     }
 
     @GetMapping("/calendar")

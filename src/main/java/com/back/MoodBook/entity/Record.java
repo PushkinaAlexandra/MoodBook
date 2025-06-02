@@ -32,7 +32,7 @@ public class Record {
     //Reason
     private String reason;
     //Advice
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "advice_id")
     private Advice advice;
 

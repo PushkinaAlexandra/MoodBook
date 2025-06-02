@@ -6,6 +6,7 @@ import com.back.MoodBook.entity.Advice;
 import com.back.MoodBook.service.AdviceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,25 +31,41 @@ public class AdviceController {
     }
 
     @GetMapping
-    public List<AdviceResponse> createBook (
+    public ResponseEntity<List<AdviceResponse>> getAdvice(
             @RequestParam("mood") String mood
     ) {
-        List<Advice> book;
-        if(mood.equals("default")){
-            book = adviceService.createBookAllAdvice();
-        }else{
-            book = adviceService.createBook(mood);
+        System.out.println("Received mood: " + mood);
+
+        try {
+            List<Advice> book;
+            if (mood.equals("default")) {
+                System.out.println("Calling createBookAllAdvice...");
+                book = adviceService.createBookAllAdvice();
+                System.out.println("createBookAllAdvice() returned " + book.size() + " items.");
+            } else {
+                System.out.println("Calling createBook(" + mood + ")...");
+                book = adviceService.createBook(mood);
+                System.out.println("createBook(" + mood + ") returned " + book.size() + " items.");
+            }
+
+            List<AdviceResponse> adviceResponses = book.stream()
+                    .map(this::response)
+                    .collect(Collectors.toList());
+
+            System.out.println("Returning " + adviceResponses.size() + " advice responses.");
+
+            return ResponseEntity.ok()
+                    .header("Content-Type", "application/json")
+                    .body(adviceResponses);
+
+        } catch (Exception e) {
+            System.err.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null); // 500 Internal Server Error
         }
-        return book.stream().map(this::response).collect(Collectors.toList());
     }
 
-//    @GetMapping
-//    public List<AdviceResponse> createBook () {
-//        List<Advice> book = adviceService.createBookAllAdvice();
-//        return book.stream().map(this::response).collect(Collectors.toList());
-//    }
-
-    public AdviceResponse response(Advice advice){
+    private AdviceResponse response(Advice advice) {
         return new AdviceResponse(
                 advice.getId(),
                 advice.getName(),
