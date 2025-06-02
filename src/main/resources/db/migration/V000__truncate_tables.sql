@@ -1,0 +1,5 @@
+---- Удаление всех данных из таблицы records
+--TRUNCATE TABLE records;
+--
+---- Удаление всех данных из таблицы advices
+--TRUNCATE TABLE advices;

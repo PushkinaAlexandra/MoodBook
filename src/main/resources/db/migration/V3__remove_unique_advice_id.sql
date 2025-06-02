@@ -1,0 +1,2 @@
+--ALTER TABLE records
+--DROP CONSTRAINT uktms06jpa4fgkjlnul5kmsoa5j;
