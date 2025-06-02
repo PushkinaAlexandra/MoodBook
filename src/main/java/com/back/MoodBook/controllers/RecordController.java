@@ -5,6 +5,7 @@ import com.back.MoodBook.dtos.RecordCreateRequest;
 import com.back.MoodBook.dtos.RecordResponse;
 import com.back.MoodBook.entity.Advice;
 import com.back.MoodBook.entity.Record;
+import com.back.MoodBook.service.AdviceService;
 import com.back.MoodBook.service.RecordService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/records")
 public class RecordController {
     private final RecordService recordService;
+    private final AdviceService adviceService;
 
     @Autowired
-    public RecordController(RecordService recordService) {
+    public RecordController(RecordService recordService, AdviceService adviceService) {
         this.recordService = recordService;
+        this.adviceService = adviceService;
     }
 
     @PostMapping("/newRecord")
@@ -29,7 +32,7 @@ public class RecordController {
                                                         @RequestBody @Valid RecordCreateRequest request
     ) {
         Record record = recordService.createRecord(request);
-        Advice advice = record.getAdvice();
+        Advice advice = adviceService.getAdvice(record.getAdviceId());
         AdviceResponse adviceResponse = new AdviceResponse(
                 advice.getId(),
                 advice.getName(),
