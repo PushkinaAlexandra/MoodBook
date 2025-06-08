@@ -3,7 +3,6 @@ package com.back.MoodBook.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -38,6 +37,10 @@ public class Record {
 //    @NaturalId(mutable = false)
 //    public Advice advice;
     private Long adviceId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -94,4 +97,12 @@ public class Record {
 //    public void setAdvice(Advice advice) {
 //        this.advice = advice;
 //    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -10,7 +10,8 @@ public class RecordCreateRequest {
 
     private String reason;
 
-    // Add the no-argument constructor
+    private String token;
+
     public RecordCreateRequest() {
     }
 
@@ -36,5 +37,13 @@ public class RecordCreateRequest {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

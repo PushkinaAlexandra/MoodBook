@@ -3,7 +3,9 @@ package com.back.MoodBook.service;
 import com.back.MoodBook.dtos.RecordCreateRequest;
 import com.back.MoodBook.entity.Advice;
 import com.back.MoodBook.entity.Record;
+import com.back.MoodBook.entity.User;
 import com.back.MoodBook.repository.RecordRepository;
+import com.back.MoodBook.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,32 +14,44 @@ import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.summingDouble;
+import java.util.Optional;
 
 @Service
 public class RecordService {
     public RecordRepository recordRepository;
     public AdviceService adviceService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
-    public RecordService(RecordRepository recordRepository, AdviceService adviceService){
+    public RecordService(RecordRepository recordRepository, AdviceService adviceService) {
         this.recordRepository = recordRepository;
         this.adviceService = adviceService;
     }
 
-    public Record createRecord(RecordCreateRequest request){
+    public Record createRecord(RecordCreateRequest request) {
+        String username = jwtUtil.extractUsername(request.getToken());
+        Optional<User> user = userService.findByUsername(username);
+//        if (!user.isPresent()) {
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN); // Запрет доступа, если пользователь не найден
+//        }
         Advice advice = adviceService.getRandomAdvice(request.getMood(), request.getExtraMood());
         Record createdRecord = new Record();
         createdRecord.setMood(request.getMood());
         createdRecord.setExtraMood(request.getExtraMood());
         createdRecord.setReason(request.getReason());
         createdRecord.setAdviceId(advice.getId());
+        createdRecord.setUser(user.orElse(null));
         return recordRepository.save(createdRecord);
     }
 
-    public List<Record> getCalendarData(int month, int year){
+    public List<Record> getRecordsByUserId(Long userId) {
+        return recordRepository.findByUserId(userId);
+    }
+
+    public List<Record> getCalendarData(int month, int year) {
         if (month < 1 || month > 12) {
             throw new IllegalArgumentException("Invalid month: " + month);
         }
@@ -48,13 +62,13 @@ public class RecordService {
         return recordRepository.findByMonth(startOfMonth, endOfMonth);
     }
 
-    public List<Record> getLast30Days (){
+    public List<Record> getLast30Days() {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime lastDay = today.minusDays(30);
         return recordRepository.findLast30DaysRecords(today, lastDay);
     }
 
-    public double getStatistic(){
+    public double getStatistic() {
         List<Record> records = getLast30Days();
         Map<String, Double> names = new HashMap<>();
         names.put("worst", -1.0);

@@ -18,4 +18,6 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     List<Record> findLast30DaysRecords(
             @Param("today") LocalDateTime today,
             @Param("lastDay") LocalDateTime lastDay);
+
+    List<Record> findByUserId(Long userId);
 }
