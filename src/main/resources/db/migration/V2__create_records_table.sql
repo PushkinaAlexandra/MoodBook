@@ -6,4 +6,6 @@ CREATE TABLE records (
     reason TEXT,
     advice_id BIGINT,
     CONSTRAINT fk_advice_id FOREIGN KEY (advice_id) REFERENCES advices(id)
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
