@@ -38,9 +38,8 @@ public class Record {
 //    public Advice advice;
     private Long adviceId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @JoinColumn(name = "user_id", nullable = false)
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -98,11 +97,11 @@ public class Record {
 //        this.advice = advice;
 //    }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

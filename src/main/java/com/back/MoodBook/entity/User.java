@@ -18,9 +18,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Record> records;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Record> records;
 
 
     public User() {
@@ -56,11 +56,11 @@ public class User {
     }
 
 
-    public Set<Record> getRecords() {
-        return records;
-    }
-
-    public void setRecords(Set<Record> records) {
-        this.records = records;
-    }
+//    public Set<Record> getRecords() {
+//        return records;
+//    }
+//
+//    public void setRecords(Set<Record> records) {
+//        this.records = records;
+//    }
 }

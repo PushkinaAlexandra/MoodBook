@@ -1,0 +1,4 @@
+
+ALTER TABLE records ADD COLUMN user_id BIGINT NOT NULL;
+
+ALTER TABLE records ADD CONSTRAINT fk_records_users FOREIGN KEY (user_id) REFERENCES users(id);

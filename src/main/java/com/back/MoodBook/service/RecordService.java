@@ -43,7 +43,7 @@ public class RecordService {
         createdRecord.setExtraMood(request.getExtraMood());
         createdRecord.setReason(request.getReason());
         createdRecord.setAdviceId(advice.getId());
-        createdRecord.setUser(user.orElse(null));
+        createdRecord.setUserId(user.get().getId());
         return recordRepository.save(createdRecord);
     }
 

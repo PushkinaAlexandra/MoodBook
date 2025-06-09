@@ -16,6 +16,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public User registerUser(String username, String password) {
         if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("Username already exists");
