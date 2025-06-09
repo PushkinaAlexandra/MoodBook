@@ -9,15 +9,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RecordRepository extends JpaRepository<Record, Long> {
-    @Query("SELECT r FROM Record r WHERE r.createdAt BETWEEN :startOfMonth AND :endOfMonth")
+    @Query("SELECT r FROM Record r WHERE r.createdAt BETWEEN :startOfMonth AND :endOfMonth AND r.userId = userId")
     List<Record> findByMonth(
             @Param("startOfMonth") LocalDateTime startOfMonth,
-            @Param("endOfMonth") LocalDateTime endOfMonth);
+            @Param("endOfMonth") LocalDateTime endOfMonth,
+            @Param("userId") Long userId);
 
-    @Query("SELECT r FROM Record r WHERE r.createdAt <= :today AND r.createdAt >= :lastDay")
+    @Query("SELECT r FROM Record r WHERE r.createdAt <= :today AND r.createdAt >= :lastDay AND r.userId = userId")
     List<Record> findLast30DaysRecords(
             @Param("today") LocalDateTime today,
-            @Param("lastDay") LocalDateTime lastDay);
+            @Param("lastDay") LocalDateTime lastDay,
+            @Param("userId") Long userId);
 
     List<Record> findByUserId(Long userId);
 }

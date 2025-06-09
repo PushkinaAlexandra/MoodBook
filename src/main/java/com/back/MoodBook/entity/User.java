@@ -18,11 +18,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Record> records;
-
-
     public User() {
     }
 
@@ -54,13 +49,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-//    public Set<Record> getRecords() {
-//        return records;
-//    }
-//
-//    public void setRecords(Set<Record> records) {
-//        this.records = records;
-//    }
 }

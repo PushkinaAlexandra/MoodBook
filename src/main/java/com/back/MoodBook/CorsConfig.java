@@ -14,8 +14,8 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow cookies
-        config.addAllowedOrigin("http://localhost:63342"); // Разрешить запросы с вашего домена
-        config.addAllowedMethod("*");  // Разрешить все методы (GET, POST, PUT, DELETE и т.д.)
+        config.addAllowedOrigin("*"); // Разрешить запросы с вашего домена
+        config.addAllowedMethod("*"); // Разрешить все методы (GET, POST, PUT, DELETE и т.д.)
         config.addAllowedHeader("*"); // Разрешить все заголовки
 
         source.registerCorsConfiguration("/**", config);

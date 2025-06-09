@@ -44,16 +44,19 @@ public class RecordController {
 
     @GetMapping("/calendar")
     public List<RecordResponse> getCalendarData(
+            @RequestParam("user") String username,
             @RequestParam("month") int month,
             @RequestParam("year") int year
     ){
-        List<Record> records = recordService.getCalendarData(month, year);
+        List<Record> records = recordService.getCalendarData(month, year, username);
         return records.stream().map(this::response).collect(Collectors.toList());
     }
 
     @GetMapping("/statistic")
-    public String getStatistic() {
-        double point = recordService.getStatistic();
+    public String getStatistic(
+            @RequestParam("user") String username
+    ) {
+        double point = recordService.getStatistic(username);
         return "\"point\": " + point;
     }
 

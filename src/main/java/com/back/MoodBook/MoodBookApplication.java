@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.back.MoodBook.repository")
-//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, LiquibaseAutoConfiguration.class,
-//		FlywayAutoConfiguration.class})
 public class MoodBookApplication {
 
 	public static void main(String[] args) {

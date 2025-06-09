@@ -38,7 +38,6 @@ public class Record {
 //    public Advice advice;
     private Long adviceId;
 
-//    @JoinColumn(name = "user_id", nullable = false)
     private Long userId;
 
     public Long getId() {
